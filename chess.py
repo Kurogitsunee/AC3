@@ -54,5 +54,9 @@ else:
     else:
         print(f"{piece.capitalize()} не угрожает полю (m, n).")
 
-    two_step_move = find_two_step_move(k, l, m, n, piece)
-    print(two_step_move)
+    if can_reach(k, l, m, n, piece) == "Можно одним ходом.":
+        reachable = can_reach(k, l, m, n, piece)
+        print(reachable)
+    else:
+        reachable = find_two_step_move(k, l, m, n, piece)
+        print(reachable)
