@@ -24,12 +24,15 @@ def can_reach(k, l, m, n, piece):
         elif is_same_color(k, l, m, n) and (abs(k - m) <= 4 or abs(l - n) <= 4) and abs(k - m) != 2  and abs(l - n) != 2:
             if ((abs(k - m) % 2 == 0) and (abs(l - n) % 2 == 0)) or ((abs(l - n) % 2 == 0) and (abs(k - m) % 2 == 0)) or ((abs(k - m) % 2 != 0) and (abs(l - n) % 2 != 0)) or ((abs(l - n) % 2 == 0) and (abs(k - m) % 2 == 0)):
                 return "Нужно два хода."
-            else:
-                return "Нельзя достичь поля за 2 хода."
-        else:
-            return "Нельзя достичь поля за 2 хода."
         
-
+def find_two_step_move(k, l, m, n, piece):
+    for i in range(1, 9):
+        for j in range(1, 9):
+            if i != k or j != l:
+                if threatens_piece(piece, k, l, i, j) and threatens_piece(piece, i, j, m, n) and can_reach(k, l, m, n, piece) == "Нужно два хода.":
+                    return f"Первый ход: ({i}, {j}). Второй ход: ({m}, {n})."
+    return "Нельзя достичь поля за 2 хода."
+    
 k = int(input("Введите вертикаль (k) для поля (k, l) (число от 1 до 8): "))
 l = int(input("Введите горизонталь (l) для поля (k, l) (число от 1 до 8): "))
 m = int(input("Введите вертикаль (m) для поля (m, n) (число от 1 до 8): "))
@@ -51,5 +54,5 @@ else:
     else:
         print(f"{piece.capitalize()} не угрожает полю (m, n).")
 
-    result = can_reach(k, l, m, n, piece)
-    print(result)
+    two_step_move = find_two_step_move(k, l, m, n, piece)
+    print(two_step_move)
